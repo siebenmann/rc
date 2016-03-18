@@ -21,11 +21,17 @@
 
 #if RC_ADDON
 
+#ifdef	DEMO_ADDON
 #define ADDONS \
 	{ b_sum,	"+" }, \
 	{ b_prod, "x" },
 
 extern void b_sum(char **av);
 extern void b_prod(char **av);
+#endif
+
+#undef	ADDONS
+#define	ADDONS	{ b_read,        "read" },
+extern void b_read (char **av);
 
 #endif

@@ -167,6 +167,15 @@ static char *compl_extcmd(const char *text, int state) {
 		bodge = NULL;
 		return r;
 	}
+	/* If we are completing through ./ or ../, complete only on the
+	 * filename and skip $path.
+	 */
+	if (!d && subdirs && isabsolute(subdirs)) {
+		dname = strdup(subdirs);
+		d = opendir(dname);
+		if (!d) efree(dname);
+		path = NULL;
+	}
 	while (d || path) {
 		if (!d) {
 			dname = dir_join(path->w, subdirs);
